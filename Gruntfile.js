@@ -37,10 +37,9 @@ module.exports = function(grunt) {
           define: false,
           require: false,
           module: false
-        },
-        ignores: ['<%= boardJsFile %>']
+        }
       },
-      files: ['*.js', 'assets/js/**/*.js']
+      files: ['src/js/**/*.js']
     },
     less: {
       dev: {
@@ -87,9 +86,25 @@ module.exports = function(grunt) {
         ]
       }
     },
+    copy: {
+      main: {
+        files: [
+          {
+            src: ['**'],
+            dest: 'dist',
+            cwd: 'src/files/',
+            expand: true
+          }
+        ]
+      }
+    },
+    clean: {
+      main: [
+        'dist/**/*',
+        '!dist'
+      ]
+    },
     cssFile: 'dist/css/core.css',
-    boardJsFile: 'assets/js/boards.js',
-    boardJsSrc: ['assets/lib/boards/jquery.js', 'assets/lib/boards/bigtext.js', 'assets/js/boards/base.js']
   });
 
   grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -97,11 +112,10 @@ module.exports = function(grunt) {
   //grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-stencil');
-  //grunt.loadNpmTasks('grunt-nodemon');
-  //grunt.loadNpmTasks('grunt-concurrent');
+  grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-copy');
 
-  grunt.registerTask('default', ['jshint', 'less:dev', 'stencil:main']);
-  grunt.registerTask('work', ['concurrent:target']);
-  grunt.registerTask('prep', ['less:clean', 'jshint']);
+  grunt.registerTask('default', ['jshint', 'less:dev', 'stencil:main', 'copy:main']);
+  grunt.registerTask('pack', ['clean', 'less:clean', 'jshint']);
 
 };
