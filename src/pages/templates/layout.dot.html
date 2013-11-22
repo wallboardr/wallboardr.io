@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>{{= it.title}}</title>
+	</head>
+	<body>
+        <div id="banner">
+            <span>Logo</span>
+            {{= it.include("menu.html")}}
+        </div>
+        <div id="content">
+            {{= it.document}}
+        </div>
+    </body>
+</html>

@@ -1,0 +1,28 @@
+{
+  "name": "wallboardr.io",
+  "version": "0.0.1",
+  "description": "Website at wallboardr.io",
+  "main": "dist/index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "mercurial",
+    "url": "https://bitbucket.org/colinbate/wallboardr.io"
+  },
+  "keywords": [
+    "wallboardr",
+    "wallboard",
+    "information",
+    "radiator"
+  ],
+  "author": "Colin Bate <colin@colinbate.com>",
+  "license": "MIT",
+  "dependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-less": "~0.8.2",
+    "grunt-contrib-jshint": "~0.7.2",
+    "grunt-stencil": "~1.0.0",
+    "grunt-contrib-watch": "~0.5.3"
+  }
+}
