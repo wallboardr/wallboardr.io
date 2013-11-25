@@ -2,14 +2,20 @@
 <html>
 	<head>
 		<title>{{= it.title}}</title>
+    <link rel="stylesheet" href="css/core.css">
+    <link rel="shortcut icon" href="/favicon.ico">
 	</head>
 	<body>
-        <div id="banner">
-            <span>Logo</span>
-            {{= it.include("menu.html")}}
-        </div>
-        <div id="content">
-            {{= it.document}}
-        </div>
+    <header role="banner">
+      <div>
+        <h1><a href="/">Wallboardr. <i class="icon-screen"></i></a></h1>
+        {{= it.include("menu") }}
+      </div>
+    </header>
+    <div id="content">
+      <div>
+        {{= it.document}}
+      </div>
+    </div>
     </body>
 </html>

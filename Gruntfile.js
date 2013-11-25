@@ -58,22 +58,32 @@ module.exports = function(grunt) {
     },
     watch: {
       less: {
-        files: ['src/less/*.less'],
+        files: ['src/less/**/*.less'],
         tasks: 'less:dev'
       },
       js: {
         files: ['<%= jshint.files %>'],
         tasks: ['jshint']
+      },
+      pages: {
+        files: ['src/pages/**/*'],
+        tasks: ['stencil:main']
       }
     },
     stencil: {
       main: {
         options: {
           env: {
-            title: "Wallboardr",
+            title: "Wallboardr"
           },
           partials: "src/pages/partials",
-          templates: "src/pages/templates"
+          templates: "src/pages/templates",
+          template_map: [
+            {
+              match: "src/pages/content/*.md",
+              template: "layout.dot.html"
+            }
+          ]
         },
         files: [
           {
@@ -104,6 +114,36 @@ module.exports = function(grunt) {
         '!dist'
       ]
     },
+    rsync: {
+      options: {
+        args: ["--verbose", "-az"]
+      },
+      local: {
+        options: {
+          src: "dist/",
+          dest: "/web/clients/wallboardr",
+          syncDestIgnoreExcl: true
+        }
+      },
+      live: {
+        options: {
+          src: "dist/",
+          dest: "/var/www",
+          host: "root@wallboardr.io",
+          ssh: true,
+          syncDestIgnoreExcl: true
+        }
+      }
+    },
+    connect: {
+      server: {
+        options: {
+          port: 8001,
+          base: 'dist',
+          keepalive: true
+        }
+      }
+    },
     cssFile: 'dist/css/core.css',
   });
 
@@ -114,8 +154,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-stencil');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-rsync');
 
   grunt.registerTask('default', ['jshint', 'less:dev', 'stencil:main', 'copy:main']);
-  grunt.registerTask('pack', ['clean', 'less:clean', 'jshint']);
+  grunt.registerTask('pack', ['clean', 'jshint', 'less:clean', 'stencil:main', 'copy:main']);
+  grunt.registerTask('deploy', ['pack', 'rsync:live']);
+
 
 };
