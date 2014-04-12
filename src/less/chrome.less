@@ -5,6 +5,11 @@ body {
 	background-color: @color-base-page;
 }
 
+* {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
 h1,h2,h3,h4,h5,h6 {
 	font-family: @font-header;
 	font-weight: bold;
@@ -111,5 +116,11 @@ nav {
 	> div {
 		.column(12);
 	}
+
+  img {
+    max-width: 100%;
+    border: 1px solid #ccc;
+    padding: 0.5em;
+  }
 }
 
